@@ -274,6 +274,7 @@ h1 {
 	font-family: 'Century Gothic', sans-serif;
 	color: #666;
 	font-weight: bold;
+	word-spacing: normal;
 }
 
 h2 {
@@ -292,6 +293,7 @@ h3 {
 	font-size: 4rem;
 	font-family: 'Century Gothic', sans-serif;
 	color: #999;
+	word-spacing: normal;
 
 }
 
@@ -301,6 +303,7 @@ h4 {
 	font-family: 'Century Gothic', sans-serif;
 	color: #333;
 	text-transform: uppercase;
+	word-spacing: normal;
 }
 
 .image-section h4,
@@ -339,6 +342,7 @@ h5 {
 	font-size: 3rem;
 	font-family: 'Century Gothic', sans-serif;
 	color: #55bed4;
+	word-spacing: normal;
 }
 
 h6 {
@@ -1221,10 +1225,9 @@ img.alignright,
 ---------------------------------------------------------------------------------------------------- */
 
 .site-header {
-	background-color: #fff;
-	border-bottom: 1px solid #ddd;
+	background: transparent;
 	left: 0;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	width: 100%;
 	z-index: 999;
@@ -1240,7 +1243,7 @@ img.alignright,
 }
 
 .site-header.light {
-	background-color: #fff;
+	background: rgba(255,255,255,.5);
 	padding-top: 0;
 }
 
