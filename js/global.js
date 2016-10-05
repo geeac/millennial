@@ -1,6 +1,6 @@
 jQuery(function( $ ){
 
-	if( $( document ).scrollTop() > 0 ){
+	/*if( $( document ).scrollTop() > 0 ){
 		$( '.site-header' ).addClass( 'light' );			
 	}
 
@@ -14,7 +14,7 @@ jQuery(function( $ ){
 			$( '.site-header' ).removeClass( 'light' );			
 		}
 
-	});
+	});*/
 
 
 	$( '.nav-primary .genesis-nav-menu, .nav-secondary .genesis-nav-menu' ).addClass( 'responsive-menu' ).before('<div class="responsive-menu-icon"></div>');
