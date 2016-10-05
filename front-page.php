@@ -20,9 +20,6 @@ function mil_enqueue_custom_script() {
 			
 }
 
-//* Remove the entry title (requires HTML5 theme support)
-remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
-
 function aspire_front_page_genesis_meta() {
 
 	if ( is_active_sidebar( 'front-page-1' ) || is_active_sidebar( 'front-page-2' ) || is_active_sidebar( 'front-page-3' ) || is_active_sidebar( 'front-page-4' ) || is_active_sidebar( 'home-mid-left' ) || is_active_sidebar( 'home-mid-right' ) || is_active_sidebar( 'home-mid-wide' ) || is_active_sidebar( 'front-page-5' ) || is_active_sidebar( 'front-page-6' ) || is_active_sidebar( 'front-page-7' ) || is_active_sidebar( 'front-page-8' ) || is_active_sidebar( 'front-page-9' ) || is_active_sidebar( 'front-page-10' ) || is_active_sidebar( 'front-page-11' ) || is_active_sidebar( 'front-page-12' ) || is_active_sidebar( 'front-page-13' )) {
