@@ -14,13 +14,16 @@ jQuery(function( $ ){
 			$( '.site-header' ).removeClass( 'light' );			
 		}
 
-	});*/
+	});
 
 
 	$( '.nav-primary .genesis-nav-menu, .nav-secondary .genesis-nav-menu' ).addClass( 'responsive-menu' ).before('<div class="responsive-menu-icon"></div>');
+	*/
+
+	$( '.nav-hamburger .genesis-nav-menu' ).addClass( 'responsive-menu' );
 
 	$( '.responsive-menu-icon' ).click(function(){
-		$(this).next( '.nav-primary .genesis-nav-menu,  .nav-secondary .genesis-nav-menu' ).slideToggle();
+		$(this).next( '.nav-hamburger .genesis-nav-menu' ).toggle('slide', { direction:'right' } );
 	});
 
 	$( window ).resize(function(){
@@ -36,6 +39,14 @@ jQuery(function( $ ){
 			$(this).find( '.sub-menu:first' ).slideToggle(function() {
 			$(this).parent().toggleClass( 'menu-open' );
 		});
+	});
+
+
+	/* NEW HAMBURGER MENU */	
+
+	$('.mobile-button').click(function(){
+		$(this).toggleClass('open');
+		$( '.nav-hamburger .genesis-nav-menu' ).toggle('slide', { direction:'right' } );
 	});
 
 });

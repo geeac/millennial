@@ -3084,7 +3084,8 @@ div.pp_default .pp_bottom .pp_right {
 	}
 	.site-header ul.genesis-nav-menu { top: 70px; }
 
-	.nav-primary{ display: none; }
+	.nav-primary,
+	.nav-secondary{ display: none; }
 
 	/*.nav-hamburger{
 		position: initial;

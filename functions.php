@@ -243,6 +243,15 @@ function mil_hamburger_menu() {
 	) );
 
 	wp_nav_menu( array(
+		'menu' => 'Shop Menu',
+		'container'      => false,
+		'depth'          => 0,
+		'fallback_cb'    => false,
+		'menu_class'     => 'genesis-nav-menu hamburger',	
+	) );
+
+
+	wp_nav_menu( array(
 		'theme_location' => 'hamburger',
 		'container'      => false,
 		'depth'          => 1,
