@@ -1,3 +1,5 @@
-jQuery(window).load(function () {
-    jQuery('.video-bg-noloop video').removeAttr('loop');
+jQuery(function( $ ) {
+	$('.video-bg-noloop video').removeAttr('loop');
 });
+
+
