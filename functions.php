@@ -14,6 +14,9 @@ require_once( get_stylesheet_directory() . '/lib/customize.php' );
 //* Include Customizer CSS
 include_once( get_stylesheet_directory() . '/lib/output.php' );
 
+//* Include Overwritten shortcode for BNE Slider
+include_once( get_stylesheet_directory() . '/inc-shortcode-slider.php' );
+
 //* Child theme (do not remove)
 define( 'CHILD_THEME_NAME', 'Millennial' );
 define( 'CHILD_THEME_URL', 'http://my.studiopress.com/themes/aspire/' );
@@ -23,6 +26,7 @@ define( 'CHILD_THEME_VERSION', '1.0.0' );
 add_action( 'wp_enqueue_scripts', 'aspire_enqueue_scripts_styles' );
 function aspire_enqueue_scripts_styles() {
 
+	wp_enqueue_script( 'jquery-ui', get_stylesheet_directory_uri() . '/js/jquery-ui.min.js', array( 'jquery' ), '1.12.1' );
 	wp_enqueue_script( 'aspire-fadeup-script', get_stylesheet_directory_uri() . '/js/fadeup.js', array( 'jquery' ), '1.0.0', true );
 	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700', array(), CHILD_THEME_VERSION );
 	wp_enqueue_style( 'dashicons' );
@@ -64,12 +68,18 @@ function wp_enqueue_woocommerce_style(){
 add_action( 'wp_enqueue_scripts', 'wp_enqueue_woocommerce_style' );
 
 
-// Change number or products per row to 4
+// Change number or products per row to 2
 add_filter('loop_shop_columns', 'loop_columns');
 if (!function_exists('loop_columns')) {
 	function loop_columns() {
-		return 4; // 4 products per row
+		return 2; // 2 products per row
 	}
+}
+
+//* Show exercept in product archives
+add_action( 'woocommerce_after_shop_loop_item_title', 'show_excerpt_in_product_archives', 40 );
+function show_excerpt_in_product_archives() {
+    the_excerpt();
 }
 
 // WooCommerce | Display 30 products per page.
@@ -104,6 +114,7 @@ add_image_size( 'featured-content-lg', 1200, 600, TRUE );
 add_image_size( 'featured-content-sm', 600, 400, TRUE );
 add_image_size( 'featured-content-th', 600, 600, TRUE );
 add_image_size( 'portfolio-thumbnail', 348, 240, TRUE );
+add_image_size( 'page-featured', 2000, 450, TRUE );
 
 //* Unregister layout settings
 genesis_unregister_layout( 'content-sidebar-sidebar' );
@@ -111,7 +122,7 @@ genesis_unregister_layout( 'sidebar-content-sidebar' );
 genesis_unregister_layout( 'sidebar-sidebar-content' );
 
 //* Unregister secondary sidebar
-unregister_sidebar( 'sidebar-alt' );
+//unregister_sidebar( 'sidebar-alt' );
 
 //* Unregister the header right widget area
 unregister_sidebar( 'header-right' );
@@ -120,12 +131,52 @@ unregister_sidebar( 'header-right' );
 remove_action( 'genesis_after_header', 'genesis_do_nav' );
 add_action( 'genesis_header', 'genesis_do_nav', 12 );
 
+//* Reposition the secondary navigation menu
+remove_action( 'genesis_after_header', 'genesis_do_subnav' );
+add_action( 'template_redirect', 'genesis_shop_nav' );
+function genesis_shop_nav(){
+	if ( is_woocommerce() || is_page_template( 'page_shop.php' ) ){
+		add_action( 'genesis_after_header', 'genesis_do_subnav', 12 );
+	}
+}
+
 //* Remove output of primary navigation right extras
 remove_filter( 'genesis_nav_items', 'genesis_nav_right', 10, 2 );
 remove_filter( 'wp_nav_menu_items', 'genesis_nav_right', 10, 2 );
 
+
+//* Add search box to secondary meny
+add_filter( 'wp_nav_menu_items', 'theme_menu_extras', 10, 2 );
+function theme_menu_extras( $menu, $args ) {
+	if ( 'secondary' !== $args->theme_location )
+		return $menu;
+	ob_start();
+	get_search_form();
+	$search = ob_get_clean();
+	$menu  .= '<li class="right search">' . $search . '</li>';
+	return $menu;
+}
+
+//* Add jPushmenu classes
+/*add_filter('wp_nav_menu_args','mil_responsive_nav_class');
+function mil_responsive_nav_class( $args ) {
+	if( $args['theme_location'] == 'primary')  {
+
+    		$args['menu_class'] .= ' cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right';
+	}
+	return $args;
+}*/
+
+
+//* Add hamburger button to nav for responsive menu
+add_action('genesis_header', 'mil_responsive_nav');
+function mil_responsive_nav(){
+	echo '<div id="mobile-button" class="mobile-button toggle-menu menu-right"><span></span><span></span><span></span></div>';
+
+}
+
 //* Unregister secondary navigation menu
-add_theme_support( 'genesis-menus', array( 'primary' => __( 'Primary Navigation Menu', 'genesis' ) ) );
+//add_theme_support( 'genesis-menus', array( 'primary' => __( 'Primary Navigation Menu', 'genesis' ) ) );
 
 //* Add featured image above the entry content
 add_action( 'genesis_entry_header', 'aspire_featured_photo', 5 );
@@ -140,14 +191,67 @@ function aspire_featured_photo() {
 
 }
 
-/*//* Add support for 1-column footer widget area
-add_theme_support( 'genesis-footer-widgets', 1 );*/
+/* Add Featured Image on top of pages and posts */
+add_action( 'genesis_after_header', 'featured_page_image' );
+function featured_page_image() {
+	if ( is_singular(array('page', 'post')) && has_post_thumbnail() ) { 
+	    //the_post_thumbnail('large'); //you can use medium, large or a custom size
+		$image_args = array(
+			'size' => 'page-featured',
+			'attr' => array(
+				'class' => 'aligncenter page-featured',
+			),
+		);
+		 
+		genesis_image( $image_args );
+	}
+	else if ( is_woocommerce() ){
+		if ( has_post_thumbnail( 179 ) ) {
+	        echo get_the_post_thumbnail( 179, 'page-featured', array( 'class' => 'aligncenter page-featured' ) );
+	    }
+
+	}
+
+	else if (is_home()){
+		// Get the ID of your posts page
+	    $id = get_option('page_for_posts');
+	    // Use the ID to get the post thumbnail or whatever
+	    if ( has_post_thumbnail( $id ) ) {
+	        echo get_the_post_thumbnail( $id, 'page_featured', array( 'class' => 'aligncenter page-featured' ) );
+	    }
+	}
+
+} 
+
 
 //* Add support for 3-column footer widgets
 add_theme_support( 'genesis-footer-widgets', 3 );
 
-//* Add support for footer menu
-add_theme_support ( 'genesis-menus' , array ( 'primary' => 'Primary Navigation Menu', 'footer' => 'Footer Navigation Menu' ) );
+//* Add support for extra menus
+add_theme_support ( 'genesis-menus' , array ( 'primary' => 'Primary Navigation Menu', 'secondary' => 'Shop Navigation Menu', 'hamburger' => 'Hamburger Menu', 'footer' => 'Footer Navigation Menu' ) );
+
+//* Hook hamburger after primary nav
+add_action( 'genesis_header', 'mil_hamburger_menu', 11 );
+function mil_hamburger_menu() {
+	printf( '<nav %s>', genesis_attr( 'nav-hamburger' ) );
+	wp_nav_menu( array(
+		'menu' => 'Primary Menu',
+		'container'      => false,
+		'depth'          => 0,
+		'fallback_cb'    => false,
+		'menu_class'     => 'genesis-nav-menu hamburger',	
+	) );
+
+	wp_nav_menu( array(
+		'theme_location' => 'hamburger',
+		'container'      => false,
+		'depth'          => 1,
+		'fallback_cb'    => false,
+		'menu_class'     => 'genesis-nav-menu',	
+	) );
+	
+	echo '</nav>';
+}
 
 //* Hook menu in footer
 add_action( 'genesis_footer', 'aspire_footer_menu', 7 );
@@ -295,4 +399,14 @@ genesis_register_sidebar( array(
 	'id'          => 'front-page-13',
 	'name'        => __( 'Front Page 13', 'aspire' ),
 	'description' => __( 'This is the front page 13 section.', 'aspire' ),
+) );
+genesis_register_sidebar( array(
+	'id'          => 'shop-page',
+	'name'        => __( 'Main Shop Page', 'aspire' ),
+	'description' => __( 'This is the main shop page widget area.', 'aspire' ),
+) );
+genesis_register_sidebar( array(
+	'id'          => 'newsletter',
+	'name'        => __( 'Newsletter widget', 'aspire' ),
+	'description' => __( 'This is the newsletter optin widget area.', 'aspire' ),
 ) );

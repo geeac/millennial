@@ -16,7 +16,7 @@ add_action( 'genesis_meta', 'aspire_front_page_genesis_meta' );
 add_action( 'wp_enqueue_scripts', 'mil_enqueue_custom_script' );
 function mil_enqueue_custom_script() {
 
-	wp_enqueue_script( 'aspire-script', get_bloginfo( 'stylesheet_directory' ) . '/js/custom.js', array( 'jquery' ), '1.0.0' );
+	wp_enqueue_script( 'aspire-script', get_bloginfo( 'stylesheet_directory' ) . '/js/custom.js', array( 'jquery' ), '1.0.0', true );
 			
 }
 
