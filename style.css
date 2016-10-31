@@ -277,6 +277,9 @@ h1 {
 	word-spacing: normal;
 }
 
+.woocommerce .page-title {
+	font-size: 50px;
+}
 .heading-first{
 	font-size:110px;
 	font-size:11rem;
@@ -508,20 +511,13 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"],
 .button {
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-ms-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	background-color: #fa5738;
 	border: 0;
 	color: #fff;
 	cursor: pointer;
-	font-size: 14px;
-	font-size: 1.4rem;
 	font-weight: 400;
 	letter-spacing: 1px;
 	padding: 10px 30px;
-	text-transform: uppercase;
 	width: auto;
 	word-spacing: 2px;
 }
@@ -536,15 +532,19 @@ input:focus[type="button"],
 input:focus[type="reset"],
 input:focus[type="submit"],
 .button:focus  {
-	background-color: #fa5738;
-	color: #fff;
+	background-color: #fff;
+	color: #fa5738;
 }
 
-.site-inner .button:hover,
+.site-container .button:hover,
 .entry-content .button:hover,
 .entry-content .button:focus {
 	background: #fff;
 	color: #3EBCE7;
+}
+
+.infusion-field{
+	margin-bottom: 10px;
 }
 
 footer.site-footer a:hover {
@@ -610,7 +610,7 @@ a.button {
 	-ms-border-radius: initial;
 	-webkit-border-radius: initial;
 }
-a.button.medium {
+.button.medium {
 	font-size: 20px;
 	font-weight: 300;
 	padding: 12px 20px 12px 120px;
@@ -759,6 +759,10 @@ th {
 
 .secondary-nav .site-inner {
 	margin-top: 250px;
+}
+
+.nav-secondary{
+	background-color: #3EBCE7;
 }
 
 /* ## Column Widths and Positions
@@ -926,6 +930,14 @@ th {
 	-webkit-border-radius: 99%;
 }
 
+.video-fallback{
+	text-align: center;
+}
+.video-fallback,
+.video-fallback h2{
+	color: #fff;
+}
+
 /* ## Genesis
 --------------------------------------------- */
 
@@ -1070,7 +1082,7 @@ img.alignnone,
 a.alignleft,
 img.alignleft,
 .wp-caption.alignleft {
-	margin: 0 24px 24px 0;
+	margin: 0 24px 0 0;
 }
 
 a.alignright,
@@ -1416,6 +1428,15 @@ Site Navigation
 	text-transform: uppercase;
 }
 
+.nav-secondary .genesis-nav-menu a{
+	color: #fff;
+}
+
+.nav-secondary .genesis-nav-menu a:focus,
+.nav-secondary .genesis-nav-menu a:hover {
+	color: #333;
+}
+
 .genesis-nav-menu a:focus,
 .genesis-nav-menu a:hover {
 	color: #fa5738;
@@ -1484,6 +1505,7 @@ Site Navigation
 
 .genesis-nav-menu .menu-item:hover > .sub-menu {
 	left: auto;
+	right: 5px;
 	opacity: 1;
 }
 
@@ -1529,7 +1551,7 @@ Site Navigation
 	width: 300px;
 	position: absolute;
 	top: 0;
-	right:70px;
+	right:50px;
 	margin-top: 10px;
 	z-index: 9999;
 }
@@ -1586,7 +1608,7 @@ Site Navigation
 	/* Hamburger Menu */
 
       .mobile-button {
-          width: 60px;
+          width: 40px;
           height: 45px;
           position: absolute;
           top: 10px;
@@ -1606,7 +1628,7 @@ Site Navigation
       .mobile-button span {
       display: block;
           position: absolute;
-          height: 3px;
+          height: 2px;
           width: 100%;
           background: #3ebce7;
           border-radius: 9px;
@@ -1631,7 +1653,7 @@ Site Navigation
       }
 
       .mobile-button span:nth-child(2) {
-        top: 18px;
+        top: 12px;
         -webkit-transform-origin: left center;
         -moz-transform-origin: left center;
         -o-transform-origin: left center;
@@ -1639,7 +1661,7 @@ Site Navigation
       }
 
       .mobile-button span:nth-child(3) {
-        top: 36px;
+        top: 24px;
         -webkit-transform-origin: left center;
         -moz-transform-origin: left center;
         -o-transform-origin: left center;
@@ -1665,7 +1687,7 @@ Site Navigation
         -moz-transform: rotate(-45deg);
         -o-transform: rotate(-45deg);
         transform: rotate(-45deg);
-        top: 39px;
+        top: 26px;
         left: 8px;
       }
 
@@ -3372,7 +3394,10 @@ div.pp_default .pp_bottom .pp_right {
 
 @media only screen and (min-width: 961px){
 	.genesis-nav-menu.hamburger { display: none !important; }
+	
 }
+
+
 
 /* # Print Styles
 ---------------------------------------------------------------------------------------------------- */

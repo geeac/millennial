@@ -217,6 +217,17 @@ function aspire_front_page_widgets_bottom() {
 
 }
 
+//* Add newsletter widget area
+add_action( 'genesis_after_entry', 'mil_optin_widget' );
+function mil_optin_widget(){
+	if ( is_active_sidebar( 'newsletter' ) ) { 
+		genesis_widget_area( 'newsletter', array(
+			'before' => '<div id="front-page-optin" class="optin">',
+			'after'  => '</div>',
+		) );
+	}
+}
+
 //* Add opening markup for blog section
 function aspire_front_page_blog_open() {
 

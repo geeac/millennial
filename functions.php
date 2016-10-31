@@ -67,6 +67,12 @@ function wp_enqueue_woocommerce_style(){
 }
 add_action( 'wp_enqueue_scripts', 'wp_enqueue_woocommerce_style' );
 
+//* Changes the redirect URL for the Return To Shop button in the cart.
+function wc_empty_cart_redirect_url() {
+	return '/shop-main/';
+}
+add_filter( 'woocommerce_return_to_shop_redirect', 'wc_empty_cart_redirect_url' );
+
 
 // Change number or products per row to 2
 add_filter('loop_shop_columns', 'loop_columns');
@@ -146,7 +152,7 @@ remove_filter( 'wp_nav_menu_items', 'genesis_nav_right', 10, 2 );
 
 
 //* Add search box to secondary meny
-add_filter( 'wp_nav_menu_items', 'theme_menu_extras', 10, 2 );
+/*add_filter( 'wp_nav_menu_items', 'theme_menu_extras', 10, 2 );
 function theme_menu_extras( $menu, $args ) {
 	if ( 'secondary' !== $args->theme_location )
 		return $menu;
@@ -155,16 +161,6 @@ function theme_menu_extras( $menu, $args ) {
 	$search = ob_get_clean();
 	$menu  .= '<li class="right search">' . $search . '</li>';
 	return $menu;
-}
-
-//* Add jPushmenu classes
-/*add_filter('wp_nav_menu_args','mil_responsive_nav_class');
-function mil_responsive_nav_class( $args ) {
-	if( $args['theme_location'] == 'primary')  {
-
-    		$args['menu_class'] .= ' cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right';
-	}
-	return $args;
 }*/
 
 
