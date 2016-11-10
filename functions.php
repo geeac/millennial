@@ -91,6 +91,18 @@ function show_excerpt_in_product_archives() {
 // WooCommerce | Display 30 products per page.
 add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 30;' ), 20 );
 
+/*
+function mil_event_regular_cost($event){
+	$woo_tickets = TRIBE__TICKETS_PLUS__COMMERCE__WOOCOMMERCE__MAIN::get_instance();
+	$ticket_ids  = $woo_tickets->get_tickets_ids( $event );
+	//print_r($ticket_ids);
+ 
+	foreach ( $ticket_ids as $ticket_id ) {
+		$regular_price = get_woocommerce_currency_symbol().get_post_meta($ticket_id, '_regular_price', TRUE);
+	}
+	return $regular_price;
+}*/
+
 //* Add viewport meta tag for mobile browsers
 add_theme_support( 'genesis-responsive-viewport' );
 
@@ -222,6 +234,13 @@ function featured_page_image() {
 
 //* Add support for 3-column footer widgets
 add_theme_support( 'genesis-footer-widgets', 3 );
+
+//* Change the footer text
+add_filter('genesis_footer_creds_text', 'mil_footer_creds_filter');
+function mil_footer_creds_filter( $creds ) {
+	$creds = '[footer_copyright] &middot; <a href="'.get_site_url().'">'.get_bloginfo( 'name' ).'</a> &middot; Designed <a href="http://www.greatoakcircle.com" title="Great Oak Circle">Great Oak Circle</a>';
+	return $creds;
+}
 
 //* Add support for extra menus
 add_theme_support ( 'genesis-menus' , array ( 'primary' => 'Primary Navigation Menu', 'secondary' => 'Shop Navigation Menu', 'hamburger' => 'Hamburger Menu', 'footer' => 'Footer Navigation Menu' ) );
